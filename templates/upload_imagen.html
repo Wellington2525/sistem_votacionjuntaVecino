@@ -1,0 +1,96 @@
+{% extends 'layout.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+<p><h1 align="center"></h1></p>
+<div class="container">
+<div class="row">
+   
+  
+
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert">
+            x
+          </button>
+          {{ message }}
+        </div>
+      {% endfor %}
+    <form action="/subir_upload"  method="post"  enctype="multipart/form-data">
+       
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" onkeypress="return sololetras(event)" onpaste="return false">
+        <br>
+        <label for="cedula">cedula:</label>
+        <input type="text" id="numeroInput" oninput="validarNumero(this)" name="cedula">
+        <br>
+        <label for="email">email</label>
+        <input type="text" id="email" name="email" >
+        <br>
+       
+        <label for="imagen">Imagen del candidato:</label>
+        <input type="file" id="file" name="file" class="form-control" autocomplete="off" required>
+        <br>
+        <input type="submit" value="Registrar votentes" onclick="return validateEmail()">
+    </form>
+
+    <script>
+      function validarNumero(input) {
+          // Eliminar caracteres no numéricos utilizando una expresión regular
+          input.value = input.value.replace(/[^0-9]/g, '');
+      }
+    
+    
+      function sololetras(e) {
+        key=e.keyCode || e.which;
+       
+        teclado=String.fromCharCode(key).toLowerCase();
+       
+        letras="qwertyuiopasdfghjklñzxcvbnm ";
+       
+        especiales="8-37-38-46-164";
+       
+        teclado_especial=false;
+       
+        for(var i in especiales){
+          if(key==especiales[i]){
+            teclado_especial=true;
+            break;
+          }
+        }
+       
+        if(letras.indexOf(teclado)==-1 && !teclado_especial){
+          return false;
+        }
+       
+      }
+
+
+
+      function validateEmail(){
+                
+        // Get our input reference.
+        var emailField = document.getElementById('email');
+        
+        // Define our regular expression.
+        var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+      
+        // Using test we can check if the text match the pattern
+        if( validEmail.test(emailField.value) ){
+          alert('Canditado ingresado');
+          return true;
+        }else{
+          alert('Email estal incorrecto');
+          return false;
+        }
+      } 
+    </script>
+
+{% endblock %}
+

@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+
+{% block title %}Votaciones{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<div class="Users">
+
+
+</div>
+
+<div class="container">
+    {% for row in data %}
+  
+    <div class="card">
+        <div class="card-header">
+            <img src="/{{row['imagen_path']}}" alt="city" class="img" />
+        </div>
+       
+        <div class="card-body">
+            <span class="tag tag-teal">Candidato</span>
+            <br/>
+            <h4>
+                {{row['nombre']}}
+            </h4>
+            <br/>
+            <h3>
+                {{row['cedula']}}
+            </h3>
+          
+            <div class="user">
+                
+                <div class="user-info">
+                 
+                   
+                    <form method="post" action="{{url_for('votos',id=row['id'])}}" class="form2">
+                        <button type="submit" class="btn btn-outline-primary btn-lg" id="bton">Votar </button>
+                      
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+{% endfor %}
+    
+
+{% endblock %}
+
+

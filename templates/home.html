@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+{% block title %}Votaciones{% endblock %}
+
+{% block content %}
+
+
+
+
+<div class="container">
+    {% if data %}
+    {% for row in data %}
+  
+    <div class="card">
+        <div class="card-header">
+            {% if row['imagen_path'] is not none %}
+            <img src="{{row['imagen_path']}}" alt="city" class="img" />
+            {%else %}
+             <p>No exista data para mostrar</p>
+            {%endif %}
+        </div>
+       
+        <div class="card-body">
+           
+            <span class="tag tag-teal">Candidato</span>
+            <h4>
+                {{row['nombre']}}
+            </h4>
+
+            <h3>
+                {{row['cedula']}}
+            </h3>
+          
+            <div class="user">
+                
+                <div class="user-info">
+                 
+                   
+                    <a href="{{ url_for('candidato', id=row['id']) }}">
+                        <span class="material-symbols-outlined">
+                            how_to_vote
+                            </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+{% endfor %}
+{% else %}
+<p>No existen datos disponibles en este momento.</p>
+{% endif %}   
+
+{% endblock %}

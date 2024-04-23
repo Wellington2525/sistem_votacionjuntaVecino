@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% block title %}Estadisticas{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<div class="container">
+<p class="Est">Estadisticas</p>
+<div id="contenedor-grafico">
+    <canvas id="grafico"></canvas>
+</div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var ctx = document.getElementById('grafico').getContext('2d');
+
+        var resultadosVotos = {{resultados_votos|tojson|safe }};
+        var etiquetas = resultadosVotos.map(function (resultado) {
+            return  resultado.nombre_candidato +  ' Votos--' +  resultado.total_votos ;
+        });
+        var datos = resultadosVotos.map(function (resultado) {
+            return resultado.total_votos;
+        });
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: etiquetas,
+                datasets: [{
+                    label: 'Resultados de Votos',
+                    data: datos,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+
+
+    setTimeout(function(){
+        location.reload();
+
+    }, 5000)
+</script>
+{% endblock %}
+
+
